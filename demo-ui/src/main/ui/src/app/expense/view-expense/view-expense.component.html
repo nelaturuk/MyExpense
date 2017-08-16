@@ -7,3 +7,30 @@
     Do you want to create one now ? <a [routerLink]="['/expense/add']">Add Expense</a>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="viewByDate" (change)="setD3Data()"> Select by Date
+      </label>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="viewByType" (change)="setD3Data()"> Select by Type
+      </label>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div>
+      <nvd3 [options]="options" [data]="data"></nvd3>
+    </div>
+  </div>
+</div>

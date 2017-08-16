@@ -14,6 +14,11 @@ import { ExpenseComponent } from './expense/expense.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NvD3Module } from 'ng2-nvd3';
+
+// d3 and nvd3 should be included somewhere
+import 'd3';
+import 'nvd3';
 
 const appRoutes: Routes = [
   {
@@ -64,7 +69,8 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     ),
-    DatepickerModule.forRoot()
+    DatepickerModule.forRoot(),
+    NvD3Module
   ],
   providers: [
     AuthGuard,
