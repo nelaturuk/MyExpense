@@ -35,6 +35,19 @@ public class UserController {
 		repository.save(user);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
+	
+	@PostMapping("/users/login")
+	public User checkUserLogin(@RequestBody User user) {
+		List<User> users = repository.findByEmail(user.email);
+		if(users.size() > 0){
+			for(User u : users){
+				if(u.email.equals(user.email) && u.password.equals(user.password)){
+					return u;
+				}
+			}
+		}
+		return null;
+	}
 
 	@DeleteMapping("/users/{lname}")
 	public ResponseEntity<String> deleteUser(@PathVariable String lname) {

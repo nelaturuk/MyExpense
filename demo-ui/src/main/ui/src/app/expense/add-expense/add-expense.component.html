@@ -1,3 +1,62 @@
-<p>
-  add-expense works!
-</p>
+<div class="row">
+  <div class="col-md-12 text-center">
+    Add Expense
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <form>
+      <div class="form-group row">
+        <label for="expenseType" class="col-sm-2 col-form-label">Expense Type</label>
+        <div class="col-sm-10">
+          <select class="form-control" id="expenseType" name="expenseType" [(ngModel)]="newExpense.type">
+            <option value="undefined" disabled>Select type</option>
+            <option *ngFor="let type of expenseTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="amount" class="col-sm-2 col-form-label">Amount Spent</label>
+        <div class="col-sm-10 input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon">@</div>
+          <input type="text" class="form-control" id="amount" name="amount" placeholder="Enter Amount" [(ngModel)]="newExpense.amount">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="expenseDate" class="col-sm-2 col-form-label">Expense Date</label>
+        <div class="col-sm-10">
+          <input type="text" readonly placeholder="YYYYMMDD" class="form-control" [value]="newExpense.expenseDate | date: 'longDate'"
+            (focus)="showDatePicker=true" />
+          <datepicker *ngIf="showDatePicker" id="dp-expenseDate" style="position: absolute; z-index:10; min-height:290px;" [(ngModel)]="newExpense.expenseDate"
+            name="expenseDate" [showWeeks]="false" (selectionDone)="showDatePicker=false"></datepicker>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-md-10 col-md-2 col-sm-12">
+          <button type="submit" class="btn btn-primary" (click)="addExpense()"> 
+            Add    
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-12" *ngIf="expenseAdded">
+    <div class="alert alert-success" role="alert">
+      <strong>Done !</strong> Added expense.
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="expenseAddFailed">
+    <div class="alert alert-danger" role="alert">
+      <strong>Oh Snap !</strong> Unable to add expense.
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12 text-center">
+    <a [routerLink]="['/register']">New user ? Please register</a>
+  </div>
+</div>
