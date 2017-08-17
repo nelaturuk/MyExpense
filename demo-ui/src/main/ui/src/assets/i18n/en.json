@@ -1,0 +1,15 @@
+{
+  "title": "My Expense Tracker",
+  "login": {
+    "title": "Welcome to Login",
+    "lemail": "Email",
+    "lpassword": "Password",
+    "lbutton": "Login"
+  },
+  "errors": {
+    "emailRequired": "Email is required.",
+    "emailInvalid": "Email is invalid",
+    "passwordRequired": "Password is required.",
+    "passwordMinlength": "Minimum 5 characters length is required."
+  }
+}

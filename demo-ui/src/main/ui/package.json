@@ -24,6 +24,7 @@
     "core-js": "^2.4.1",
     "es6-shim": "^0.35.3",
     "ng2-nvd3": "^2.0.0",
+    "ng2-translate": "^5.0.0",
     "ngx-bootstrap": "^1.8.1",
     "rxjs": "^5.0.1",
     "serializer.ts": "0.0.12",

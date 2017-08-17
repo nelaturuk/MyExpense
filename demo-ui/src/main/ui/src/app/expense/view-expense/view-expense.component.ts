@@ -90,7 +90,7 @@ export class ViewExpenseComponent implements OnInit {
   getTotalAmount(): number {
     let result: number = 0;
 
-    this.currentUserExp.forEach(exp => {
+    this.getExpensesByDate().forEach(exp => {
       result = result + exp.amount;
     });
 

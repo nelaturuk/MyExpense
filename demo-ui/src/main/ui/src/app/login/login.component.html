@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-12 text-center">
-    Welcome to Login
+    {{ "login.title" | translate }}
   </div>
 </div>
 <br>
@@ -8,41 +8,41 @@
   <div class="col-md-12">
     <form #form="ngForm"> 
       <div class="form-group row">
-        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <label for="staticEmail" class="col-sm-2 col-form-label">{{ "login.lemail" | translate }}</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="email" 
                  placeholder="Enter your email" name="email" #iemail="ngModel" required [(ngModel)]="email"
                  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
           <div *ngIf="iemail.invalid && (iemail.dirty || iemail.touched)" class="alert alert-danger">
             <div *ngIf="iemail.errors.required">
-              Email is required.
+              {{ "errors.emailRequired" | translate }}
             </div>
 
             <div *ngIf="iemail.errors.pattern">
-              Email is invalid.
+              {{ "errors.emailInvalid" | translate }}
             </div>
           </div>
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+        <label for="inputPassword" class="col-sm-2 col-form-label">{{ "login.lpassword" | translate }}</label>
         <div class="col-sm-10">
           <input #ipassword="ngModel" minlength="5" required type="password" class="form-control" id="inputPassword" name="password" placeholder="Enter password" [(ngModel)]="password">
           <div *ngIf="ipassword.invalid && (ipassword.dirty || ipassword.touched)" class="alert alert-danger">
             <div *ngIf="ipassword.errors.required">
-              Password is required.
+              {{ "errors.passwordRequired" | translate }}
             </div>
 
             <div *ngIf="ipassword.errors.minlength">
-              Minimum 5 characters are required.
+              {{ "errors.passwordMinlength" | translate }}
             </div>
           </div>
         </div>
       </div>
       <div class="form-group row">
         <div class="offset-md-10 col-md-2 col-sm-12">
-          <button type="submit" class="btn btn-primary" (click)="login()"> 
-            Login    
+          <button [disabled]="!form.valid" type="submit" class="btn btn-primary" (click)="login()"> 
+            {{ "login.lbutton" | translate }}    
           </button>
         </div>
       </div>

@@ -19,6 +19,10 @@ public class Expense {
 	public Date createdDate;
 	public Date updatedDate;
 	
+	public Expense() {
+		
+	}
+	
 	public Expense(User user, String type, int amount, Date expenseDate){
 		this.user = user;
 		this.type = type;
