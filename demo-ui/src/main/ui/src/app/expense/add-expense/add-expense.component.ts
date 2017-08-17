@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ExpenseService } from './../../services/expense/expense.service';
 import { AccountService } from './../../services/account/account.service';
 import { AppProperties } from './../../app.properties';
@@ -18,7 +19,8 @@ export class AddExpenseComponent implements OnInit {
   showDatePicker: boolean = false;
 
   constructor(private accountService: AccountService,
-    private expenseService: ExpenseService) { }
+    private expenseService: ExpenseService, 
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -33,6 +35,11 @@ export class AddExpenseComponent implements OnInit {
           this.expenseAddFail = true;
         }
       });
+  }
+
+
+  viewExpense(): void {
+    this.router.navigate(['/expense']);
   }
 
 }

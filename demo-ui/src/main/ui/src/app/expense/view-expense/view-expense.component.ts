@@ -3,6 +3,7 @@ import { Expense } from './../../services/expense/expense.model';
 import { AccountService } from './../../services/account/account.service';
 import { ExpenseService } from './../../services/expense/expense.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-view-expense',
@@ -18,6 +19,10 @@ export class ViewExpenseComponent implements OnInit {
   data;
   viewByDate: boolean = false;
   viewByType: boolean = true;
+  fromDate: Date = moment().subtract(30, 'd').toDate();
+  toDate: Date = new Date();
+  showFromDatePicker: boolean = false;
+  showToDatePicker: boolean = false;
 
   constructor(private expenseService: ExpenseService,
     private accountService: AccountService,
@@ -30,6 +35,7 @@ export class ViewExpenseComponent implements OnInit {
           if (res) {
             this.currentUserExp = res;
             if (this.currentUserExp.length > 0) {
+              this.setD3Data();
               this.showNoExpenses = false;
             } else {
               this.showNoExpenses = true;
@@ -40,86 +46,71 @@ export class ViewExpenseComponent implements OnInit {
         });
     }
 
-    this.setD3Data();
+
+  }
+
+
+  getExpensesByDate(): Expense[] {
+    if(this.currentUserExp.length > 0) {
+      return this.currentUserExp.filter(exp => exp.expenseDate <= this.toDate && exp.expenseDate >= this.fromDate);
+    }
+    return [];
   }
 
   setD3Data(): void {
-    if (this.viewByType) {
-      this.options = {
-        chart: {
-          type: 'pieChart',
-          height: 450,
-          donut: true,
-          x: function (d) { return d.key; },
-          y: function (d) { return d.value; },
-          showLabels: true,
-          pie: {
-            startAngle: function (d) { return d.startAngle - Math.PI },
-            endAngle: function (d) { return d.endAngle - Math.PI }
-          },
-          duration: 500,
-          legend: {
-            margin: {
-              top: 5,
-              right: 140,
-              bottom: 5,
-              left: 0
-            }
-          }
-        }
-      }
-
-      this.data = [];
-
-      this.currentUserExp.forEach(exp => {
-        this.data.push({
-          key: exp.type,
-          value: exp.amount
-        });
-      })
-    }
-
-    if (this.viewByDate) {
-      this.options = {
-        chart: {
-          type: 'multiBarChart',
-          height: 450,
+    this.options = {
+      chart: {
+        type: 'pieChart',
+        height: 450,
+        x: function (d) { return d.key; },
+        y: function (d) { return d.value; },
+        showLabels: true,
+        duration: 500,
+        legend: {
           margin: {
-            top: 20,
-            right: 20,
-            bottom: 45,
-            left: 45
-          },
-          clipEdge: true,
-          //staggerLabels: true,
-          duration: 500,
-          stacked: true,
-          xAxis: {
-            axisLabel: 'Expense Type ($)',
-            showMaxMin: false,
-            tickFormat: function (d) {
-              return d.key;
-            }
-          },
-          yAxis: {
-            axisLabel: 'Expense Date',
-            axisLabelDistance: -20,
-            tickFormat: function (d) {
-              return d3.format(',.1f')(d);
-            }
+            top: 5,
+            right: 0,
+            bottom: 5,
+            left: 0
           }
         }
       }
-
-      this.data = [];
-
-      this.currentUserExp.forEach(exp => {
-        this.data.push({
-          key: exp.type,
-          value: exp.amount
-        });
-      })
     }
+
+    this.data = [];
+
+    this.getExpensesByDate().forEach(exp => {
+      this.data.push({
+        key: exp.type,
+        value: exp.amount
+      });
+    });
+  }
+
+  getTotalAmount(): number {
+    let result: number = 0;
+
+    this.currentUserExp.forEach(exp => {
+      result = result + exp.amount;
+    });
+
+    return result;
+  }
+
+  addExpense(): void {
+    this.router.navigate(['/expense/add']);
+  }
+
+  updateFromDate(event): void {
+    this.showFromDatePicker=false; 
+    this.fromDate = event;
+    this.setD3Data();
+  }
+
+  updateToDate(event): void {
+    this.showToDatePicker=false; 
+    this.toDate = event;
+    this.setD3Data();
   }
 }
 
